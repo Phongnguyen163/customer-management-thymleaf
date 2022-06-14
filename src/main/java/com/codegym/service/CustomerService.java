@@ -2,10 +2,7 @@ package com.codegym.service;
 
 import com.codegym.model.Customer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CustomerService implements ICustomerService {
     private static final Map<Integer, Customer> customers;
@@ -39,11 +36,22 @@ public class CustomerService implements ICustomerService {
     @Override
     public void update(int id, Customer customer) {
         customers.put(id, customer);
-
     }
 
     @Override
     public void remove(int id) {
         customers.remove(id);
+    }
+
+    @Override
+    public List<Customer> findByName(String name) {
+        List<Customer> customerList = new ArrayList<>();
+        Set<Integer> keySet = customers.keySet();
+        for (Integer key : keySet) {
+            if (customers.get(key).getName().contains(name)){
+                customerList.add(customers.get(key));
+            }
+        }
+        return customerList;
     }
 }
